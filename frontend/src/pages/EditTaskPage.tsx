@@ -134,38 +134,38 @@ const EditTaskPage = () => {
 
       {/* Main Content */}
       <main className="max-w-2xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <div className="bg-white shadow rounded-lg">
+        <div className="bg-background shadow rounded-lg border border-border">
           <div className="px-6 py-8">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div>
-                <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="title" className="block text-sm font-medium text-muted-foreground mb-2">
                   Task Title *
                 </label>
                 <input
                   type="text"
                   id="title"
                   {...register('title')}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-background text-foreground"
                   placeholder="Enter task title"
                 />
                 {errors.title && (
-                  <p className="mt-1 text-sm text-red-600">{errors.title.message}</p>
+                  <p className="mt-1 text-sm text-destructive">{errors.title.message}</p>
                 )}
               </div>
 
               <div>
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="description" className="block text-sm font-medium text-muted-foreground mb-2">
                   Description
                 </label>
                 <textarea
                   id="description"
                   {...register('description')}
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-background text-foreground"
                   placeholder="Enter task description (optional)"
                 />
                 {errors.description && (
-                  <p className="mt-1 text-sm text-red-600">{errors.description.message}</p>
+                  <p className="mt-1 text-sm text-destructive">{errors.description.message}</p>
                 )}
               </div>
 

@@ -6,6 +6,7 @@ import { tasksAPI } from '../utils/api';
 import { Plus, Settings, LogOut, Search, Filter, Calendar, CheckCircle, Clock, Edit } from 'lucide-react';
 import toast from 'react-hot-toast';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ThemeToggle from '../components/ThemeToggle';
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
@@ -62,17 +63,18 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-white shadow">
+      <header className="bg-background shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
-            <h1 className="text-3xl font-bold text-gray-900">My Tasks</h1>
+            <h1 className="text-3xl font-bold text-foreground">My Tasks</h1>
             <div className="flex items-center space-x-4">
-              <span className="text-gray-700">Welcome, {user?.name}</span>
+              <span className="text-muted-foreground">Welcome, {user?.name}</span>
+              <ThemeToggle />
               <button
                 onClick={handleLogout}
-                className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
+                className="bg-destructive text-destructive-foreground px-4 py-2 rounded-md hover:bg-destructive/80"
               >
                 Logout
               </button>
@@ -84,7 +86,7 @@ const Dashboard = () => {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         {error && (
-          <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+          <div className="mb-4 p-4 bg-destructive/10 border border-destructive text-destructive rounded">
             {error}
           </div>
         )}
@@ -93,14 +95,14 @@ const Dashboard = () => {
         <div className="mb-6 flex justify-between items-center">
           <Link
             to="/tasks/create"
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center gap-2"
+            className="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/80 flex items-center gap-2"
           >
             <Plus className="h-4 w-4" />
             Add New Task
           </Link>
           <Link
             to="/profile"
-            className="text-blue-600 hover:underline flex items-center gap-2"
+            className="text-primary hover:underline flex items-center gap-2"
           >
             <Settings className="h-4 w-4" />
             Profile Settings
@@ -108,17 +110,17 @@ const Dashboard = () => {
         </div>
 
         {/* Search and Filters */}
-        <div className="mb-6 bg-white p-4 rounded-lg shadow">
+        <div className="mb-6 bg-background p-4 rounded-lg shadow border border-border">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {/* Search */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <input
                 type="text"
                 placeholder="Search tasks..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-10 pr-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
               />
             </div>
 
@@ -127,7 +129,7 @@ const Dashboard = () => {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value as any)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
               >
                 <option value="all">All Status</option>
                 <option value="pending">Pending</option>
@@ -140,7 +142,7 @@ const Dashboard = () => {
               <select
                 value={priorityFilter}
                 onChange={(e) => setPriorityFilter(e.target.value as any)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
               >
                 <option value="all">All Priorities</option>
                 <option value="low">Low</option>
@@ -157,7 +159,7 @@ const Dashboard = () => {
                   setStatusFilter('all');
                   setPriorityFilter('all');
                 }}
-                className="w-full px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 flex items-center justify-center gap-2"
+                className="w-full px-4 py-2 bg-muted text-muted-foreground rounded-md hover:bg-muted/80 flex items-center justify-center gap-2"
               >
                 <Filter className="h-4 w-4" />
                 Clear Filters
@@ -167,20 +169,20 @@ const Dashboard = () => {
         </div>
 
         {/* Tasks List */}
-        <div className="bg-white shadow overflow-hidden sm:rounded-md">
-          <div className="px-6 py-3 bg-gray-50 border-b border-gray-200">
-            <p className="text-sm text-gray-600">
+        <div className="bg-background shadow overflow-hidden sm:rounded-md border border-border">
+          <div className="px-6 py-3 bg-muted border-b border-border">
+            <p className="text-sm text-muted-foreground">
               Showing {filteredTasks.length} of {tasks.length} tasks
             </p>
           </div>
           {filteredTasks.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">
+              <p className="text-muted-foreground text-lg">
                 {tasks.length === 0 ? 'No tasks yet. Create your first task!' : 'No tasks match your filters.'}
               </p>
             </div>
           ) : (
-            <ul className="divide-y divide-gray-200">
+            <ul className="divide-y divide-border">
               {filteredTasks.map((task) => (
                 <li key={task._id} className="px-6 py-4">
                   <div className="flex items-center justify-between">
@@ -189,16 +191,16 @@ const Dashboard = () => {
                         type="checkbox"
                         checked={task.status === 'completed'}
                         onChange={() => handleToggleTask(task._id)}
-                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        className="h-4 w-4 text-primary focus:ring-primary border-border rounded"
                       />
                       <div className="ml-3 flex-1">
-                        <p className={`text-sm font-medium ${task.status === 'completed' ? 'line-through text-gray-500' : 'text-gray-900'}`}>
+                        <p className={`text-sm font-medium ${task.status === 'completed' ? 'line-through text-muted-foreground' : 'text-foreground'}`}> 
                           {task.title}
                         </p>
                         {task.description && (
-                          <p className="text-sm text-gray-500 mt-1">{task.description}</p>
+                          <p className="text-sm text-muted-foreground mt-1">{task.description}</p>
                         )}
-                        <div className="flex items-center gap-4 mt-2 text-xs text-gray-400">
+                        <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
                           {task.dueDate && (
                             <div className="flex items-center gap-1">
                               <Calendar className="h-3 w-3" />
@@ -207,7 +209,7 @@ const Dashboard = () => {
                           )}
                           <div className="flex items-center gap-1">
                             {task.status === 'completed' ? (
-                              <CheckCircle className="h-3 w-3 text-green-500" />
+                              <CheckCircle className="h-3 w-3 text-green-500 dark:text-green-400" />
                             ) : (
                               <Clock className="h-3 w-3" />
                             )}
@@ -218,15 +220,15 @@ const Dashboard = () => {
                     </div>
                     <div className="flex items-center space-x-2">
                       <span className={`px-2 py-1 text-xs rounded-full ${
-                        task.priority === 'high' ? 'bg-red-100 text-red-800' :
-                        task.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-green-100 text-green-800'
+                        task.priority === 'high' ? 'bg-destructive/10 text-destructive' :
+                        task.priority === 'medium' ? 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200' :
+                        'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
                       }`}>
                         {task.priority}
                       </span>
                       <Link
                         to={`/tasks/${task._id}/edit`}
-                        className="text-blue-600 hover:text-blue-900 flex items-center gap-1"
+                        className="text-primary hover:text-primary/80 flex items-center gap-1"
                       >
                         <Edit className="h-3 w-3" />
                         Edit
