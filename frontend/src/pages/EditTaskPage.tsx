@@ -134,38 +134,66 @@ const EditTaskPage = () => {
 
       {/* Main Content */}
       <main className="max-w-2xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+<<<<<<< HEAD
         <div className="bg-white shadow rounded-lg">
           <div className="px-6 py-8">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div>
                 <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
+=======
+        <div className="bg-background shadow rounded-lg border border-border">
+          <div className="px-6 py-8">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <div>
+                <label htmlFor="title" className="block text-sm font-medium text-muted-foreground mb-2">
+>>>>>>> toggle
                   Task Title *
                 </label>
                 <input
                   type="text"
                   id="title"
                   {...register('title')}
+<<<<<<< HEAD
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Enter task title"
                 />
                 {errors.title && (
                   <p className="mt-1 text-sm text-red-600">{errors.title.message}</p>
+=======
+                  className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-background text-foreground"
+                  placeholder="Enter task title"
+                />
+                {errors.title && (
+                  <p className="mt-1 text-sm text-destructive">{errors.title.message}</p>
+>>>>>>> toggle
                 )}
               </div>
 
               <div>
+<<<<<<< HEAD
                 <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+=======
+                <label htmlFor="description" className="block text-sm font-medium text-muted-foreground mb-2">
+>>>>>>> toggle
                   Description
                 </label>
                 <textarea
                   id="description"
                   {...register('description')}
                   rows={4}
+<<<<<<< HEAD
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Enter task description (optional)"
                 />
                 {errors.description && (
                   <p className="mt-1 text-sm text-red-600">{errors.description.message}</p>
+=======
+                  className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-background text-foreground"
+                  placeholder="Enter task description (optional)"
+                />
+                {errors.description && (
+                  <p className="mt-1 text-sm text-destructive">{errors.description.message}</p>
+>>>>>>> toggle
                 )}
               </div>
 
