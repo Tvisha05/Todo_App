@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Task } from '../types';
 import { tasksAPI } from '../utils/api';
-import { Plus, Settings, LogOut, Search, Filter, Calendar, CheckCircle, Clock, Edit } from 'lucide-react';
+import {
+  Plus, Settings, LogOut, Search, Filter,
+  Calendar, CheckCircle, Clock, Edit
+} from 'lucide-react';
 import toast from 'react-hot-toast';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ThemeToggle from '../components/ThemeToggle';
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
@@ -52,42 +56,41 @@ const Dashboard = () => {
       task.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'all' || task.status === statusFilter;
     const matchesPriority = priorityFilter === 'all' || task.priority === priorityFilter;
-
     return matchesSearch && matchesStatus && matchesPriority;
   });
 
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
-      <header className="bg-background shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <h1 className="text-3xl font-bold text-foreground">My Tasks</h1>
-            <div className="flex items-center space-x-4">
-              <span className="text-muted-foreground">Welcome, {user?.name}</span>
-              <ThemeToggle />
-              <button
-                onClick={handleLogout}
-                className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
-              >
-                Logout
-              </button>
-            </div>
+      <header className="shadow">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
+          <h1 className="text-3xl font-bold">My Tasks</h1>
+          <div className="flex items-center gap-4">
+            <span className="text-muted-foreground">Welcome, {user?.name}</span>
+            <ThemeToggle />
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
+            >
+              <LogOut className="inline h-4 w-4 mr-1" />
+              Logout
+            </button>
           </div>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      {/* Main */}
+      <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         {error && (
-          <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+          <div className="mb-4 p-4 bg-red-100 dark:bg-red-900 border border-red-400 text-red-700 dark:text-red-200 rounded">
             {error}
           </div>
         )}
 
-        {/* Action Buttons */}
-        <div className="mb-6 flex justify-between items-center">
+        {/* Actions */}
+        <div className="flex justify-between mb-6">
           <Link
             to="/tasks/create"
             className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center gap-2"
@@ -104,8 +107,8 @@ const Dashboard = () => {
           </Link>
         </div>
 
-        {/* Search and Filters */}
-        <div className="mb-6 bg-white p-4 rounded-lg shadow">
+        {/* Search & Filters */}
+        <div className="mb-6 bg-white dark:bg-gray-900 p-4 rounded-lg shadow">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {/* Search */}
             <div className="relative">
@@ -115,69 +118,59 @@ const Dashboard = () => {
                 placeholder="Search tasks..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-background text-foreground"
               />
             </div>
 
-            {/* Status Filter */}
-            <div>
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value as any)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="all">All Status</option>
-                <option value="pending">Pending</option>
-                <option value="completed">Completed</option>
-              </select>
-            </div>
+            {/* Status */}
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value as any)}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md bg-background text-foreground"
+            >
+              <option value="all">All Status</option>
+              <option value="pending">Pending</option>
+              <option value="completed">Completed</option>
+            </select>
 
-            {/* Priority Filter */}
-            <div>
-              <select
-                value={priorityFilter}
-                onChange={(e) => setPriorityFilter(e.target.value as any)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="all">All Priorities</option>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-              </select>
-            </div>
+            {/* Priority */}
+            <select
+              value={priorityFilter}
+              onChange={(e) => setPriorityFilter(e.target.value as any)}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md bg-background text-foreground"
+            >
+              <option value="all">All Priorities</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
 
             {/* Clear Filters */}
-            <div>
-              <button
-                onClick={() => {
-                  setSearchTerm('');
-                  setStatusFilter('all');
-                  setPriorityFilter('all');
-                }}
-                className="w-full px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 flex items-center justify-center gap-2"
-              >
-                <Filter className="h-4 w-4" />
-                Clear Filters
-              </button>
-            </div>
+            <button
+              onClick={() => {
+                setSearchTerm('');
+                setStatusFilter('all');
+                setPriorityFilter('all');
+              }}
+              className="w-full px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center justify-center gap-2"
+            >
+              <Filter className="h-4 w-4" />
+              Clear Filters
+            </button>
           </div>
         </div>
 
-        {/* Tasks List */}
-        <div className="bg-white shadow overflow-hidden sm:rounded-md">
-          <div className="px-6 py-3 bg-gray-50 border-b border-gray-200">
-            <p className="text-sm text-gray-600">
-              Showing {filteredTasks.length} of {tasks.length} tasks
-            </p>
+        {/* Task List */}
+        <div className="bg-white dark:bg-gray-900 shadow rounded-md overflow-hidden">
+          <div className="px-6 py-3 border-b border-gray-200 dark:border-gray-700 text-sm text-muted-foreground">
+            Showing {filteredTasks.length} of {tasks.length} tasks
           </div>
           {filteredTasks.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">
-                {tasks.length === 0 ? 'No tasks yet. Create your first task!' : 'No tasks match your filters.'}
-              </p>
+            <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+              {tasks.length === 0 ? 'No tasks yet. Create your first task!' : 'No tasks match your filters.'}
             </div>
           ) : (
-            <ul className="divide-y divide-gray-200">
+            <ul className="divide-y divide-gray-200 dark:divide-gray-700">
               {filteredTasks.map((task) => (
                 <li key={task._id} className="px-6 py-4">
                   <div className="flex items-center justify-between">
@@ -186,10 +179,10 @@ const Dashboard = () => {
                         type="checkbox"
                         checked={task.status === 'completed'}
                         onChange={() => handleToggleTask(task._id)}
-                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                       />
-                      <div className="ml-3 flex-1">
-                        <p className={`text-sm font-medium ${task.status === 'completed' ? 'line-through text-muted-foreground' : 'text-foreground'}`}>
+                      <div className="ml-3">
+                        <p className={`font-medium ${task.status === 'completed' ? 'line-through text-muted-foreground' : ''}`}>
                           {task.title}
                         </p>
                         {task.description && (
@@ -197,19 +190,19 @@ const Dashboard = () => {
                         )}
                         <div className="flex items-center gap-4 mt-2 text-xs text-gray-400">
                           {task.dueDate && (
-                            <div className="flex items-center gap-1">
+                            <span className="flex items-center gap-1">
                               <Calendar className="h-3 w-3" />
                               {new Date(task.dueDate).toLocaleDateString()}
-                            </div>
+                            </span>
                           )}
-                          <div className="flex items-center gap-1">
+                          <span className="flex items-center gap-1">
                             {task.status === 'completed' ? (
                               <CheckCircle className="h-3 w-3 text-green-500" />
                             ) : (
-                              <Clock className="h-3 w-3" />
+                              <Clock className="h-3 w-3 text-yellow-500" />
                             )}
                             {task.status}
-                          </div>
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -223,7 +216,7 @@ const Dashboard = () => {
                       </span>
                       <Link
                         to={`/tasks/${task._id}/edit`}
-                        className="text-blue-600 hover:text-blue-900 flex items-center gap-1"
+                        className="text-blue-600 hover:underline text-xs flex items-center gap-1"
                       >
                         <Edit className="h-3 w-3" />
                         Edit
