@@ -29,7 +29,7 @@ router.post('/register', [
         .withMessage('Password must be at least 6 characters long')
 ], validate, async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, role, adminCode } = req.body;
 
         // Check if user already exists
         const existingUser = await User.findOne({ email });
@@ -37,8 +37,14 @@ router.post('/register', [
             return res.status(400).json({ message: 'User already exists with this email' });
         }
 
+        // Role assignment logic
+        let assignedRole = 'user';
+        if (role === 'admin' && adminCode === process.env.ADMIN_CODE) {
+            assignedRole = 'admin';
+        }
+
         // Create new user
-        const user = new User({ name, email, password });
+        const user = new User({ name, email, password, role: assignedRole });
         await user.save();
 
         // Generate token

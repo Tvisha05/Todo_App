@@ -9,6 +9,8 @@ import EditTaskPage from './pages/EditTaskPage'
 import ProfilePage from './pages/ProfilePage'
 import NotFoundPage from './pages/NotFoundPage'
 import LoadingSpinner from './components/LoadingSpinner'
+import AdminStatisticsPage from './pages/AdminStatisticsPage';
+import AdminSettingsPage from './pages/AdminSettingsPage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()
@@ -66,6 +68,22 @@ function App() {
           element={
             <ProtectedRoute>
               <ProfilePage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/statistics" 
+          element={
+            <ProtectedRoute>
+              <AdminStatisticsPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/settings" 
+          element={
+            <ProtectedRoute>
+              <AdminSettingsPage />
             </ProtectedRoute>
           } 
         />

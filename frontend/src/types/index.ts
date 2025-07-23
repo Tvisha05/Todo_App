@@ -2,6 +2,7 @@ export interface User {
   _id: string;
   name: string;
   email: string;
+  role: 'user' | 'admin';
   createdAt: string;
   updatedAt: string;
 }
@@ -59,4 +60,14 @@ export interface TaskFilters {
   search?: string;
   sortBy?: 'createdAt' | 'dueDate' | 'priority';
   sortOrder?: 'asc' | 'desc';
+}
+
+declare global {
+  interface ImportMetaEnv {
+    readonly VITE_API_URL?: string;
+    // add more env variables here if needed
+  }
+  interface ImportMeta {
+    readonly env: ImportMetaEnv;
+  }
 } 

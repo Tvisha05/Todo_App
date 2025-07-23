@@ -39,7 +39,7 @@ api.interceptors.response.use(
 
 // Auth API
 export const authAPI = {
-  register: async (data: { name: string; email: string; password: string }) => {
+  register: async (data: { name: string; email: string; password: string; role?: 'user' | 'admin'; adminCode?: string }) => {
     const response = await api.post<AuthResponse>('/auth/register', data);
     return response.data;
   },
@@ -109,6 +109,26 @@ export const userAPI = {
 
   deleteProfile: async () => {
     const response = await api.delete<{ message: string }>('/users/profile');
+    return response.data;
+  },
+
+  getStatistics: async () => {
+    const response = await api.get<{
+      totalUsers: number;
+      totalAdmins: number;
+      userStats: Array<{
+        _id: string;
+        name: string;
+        email: string;
+        role: 'user' | 'admin';
+        taskCount: number;
+      }>;
+    }>('/users/statistics');
+    return response.data;
+  },
+
+  deleteUserByAdmin: async (userId: string) => {
+    const response = await api.delete<{ message: string }>(`/users/${userId}`);
     return response.data;
   },
 };

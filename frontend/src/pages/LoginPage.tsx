@@ -3,9 +3,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Eye, EyeOff, CheckCircle } from 'lucide-react'
+import { Eye, EyeOff, CheckCircle, ArrowLeft } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import toast from 'react-hot-toast'
+import ThemeToggle from '../components/ThemeToggle'
 
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -19,6 +20,7 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false)
   const { login } = useAuth()
   const navigate = useNavigate()
+  const [error, setError] = useState('');
 
   const {
     register,
@@ -30,19 +32,53 @@ const LoginPage = () => {
 
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true)
+    setError('');
     try {
       await login(data.email, data.password)
       toast.success('Login successful!')
-      navigate('/dashboard')
+      // Get user from localStorage to check role
+      const storedUser = localStorage.getItem('user');
+      let role = 'user';
+      if (storedUser) {
+        try {
+          role = JSON.parse(storedUser).role;
+        } catch {}
+      }
+      if (role === 'admin') {
+        navigate('/admin/statistics')
+      } else {
+        navigate('/dashboard')
+      }
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Login failed')
+      // Show specific backend error message(s)
+      if (error.response?.data?.errors && error.response.data.errors.length > 0) {
+        setError(error.response.data.errors[0].message);
+        toast.error(error.response.data.errors[0].message);
+      } else if (error.response?.data?.message) {
+        setError(error.response.data.message);
+        toast.error(error.response.data.message);
+      } else {
+        setError('Login failed');
+        toast.error('Login failed');
+      }
     } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      {/* Simple Navbar */}
+      <nav className="w-full max-w-md flex items-center justify-between py-3 px-2 mb-8 border-b border-border bg-background rounded-t-lg">
+        <Link
+          to="/"
+          className="inline-flex items-center text-blue-600 hover:underline text-sm font-medium"
+        >
+          <ArrowLeft className="h-4 w-4 mr-1" />
+          Back to Home
+        </Link>
+        <ThemeToggle />
+      </nav>
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <div className="flex justify-center">
@@ -55,6 +91,11 @@ const LoginPage = () => {
         </div>
 
         <div className="bg-background py-8 px-6 shadow-xl rounded-lg border border-border">
+          {error && (
+            <div className="mb-4 p-3 bg-destructive/10 border border-destructive text-destructive rounded">
+              {error}
+            </div>
+          )}
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-muted-foreground">
