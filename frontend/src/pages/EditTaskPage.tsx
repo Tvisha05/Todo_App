@@ -117,92 +117,96 @@ const EditTaskPage = () => {
 
       {/* Form */}
       <main className="max-w-2xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <div className="bg-white border border-border rounded-xl shadow-sm px-6 py-8">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            <div>
-              <label htmlFor="title" className="block text-sm font-medium text-muted-foreground mb-2">
-                Task Title *
-              </label>
-              <input
-                type="text"
-                id="title"
-                {...register('title')}
-                placeholder="Enter task title"
-                className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-              {errors.title && <p className="mt-1 text-sm text-destructive">{errors.title.message}</p>}
-            </div>
+        <div className="bg-background shadow rounded-lg border border-border">
+          <div className="px-6 py-8">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <div>
+                <label htmlFor="title" className="block text-sm font-medium text-muted-foreground mb-2">
+                  Task Title *
+                </label>
+                <input
+                  type="text"
+                  id="title"
+                  {...register('title')}
+                  className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-background text-foreground"
+                  placeholder="Enter task title"
+                />
+                {errors.title && (
+                  <p className="mt-1 text-sm text-destructive">{errors.title.message}</p>
+                )}
+              </div>
 
-            <div>
-              <label htmlFor="description" className="block text-sm font-medium text-muted-foreground mb-2">
-                Description
-              </label>
-              <textarea
-                id="description"
-                rows={4}
-                {...register('description')}
-                placeholder="Enter task description (optional)"
-                className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-              {errors.description && (
-                <p className="mt-1 text-sm text-destructive">{errors.description.message}</p>
-              )}
-            </div>
+              <div>
+                <label htmlFor="description" className="block text-sm font-medium text-muted-foreground mb-2">
+                  Description
+                </label>
+                <textarea
+                  id="description"
+                  {...register('description')}
+                  rows={4}
+                  className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-background text-foreground"
+                  placeholder="Enter task description (optional)"
+                />
+                {errors.description && (
+                  <p className="mt-1 text-sm text-destructive">{errors.description.message}</p>
+                )}
+              </div>
 
-            <div>
-              <label htmlFor="dueDate" className="block text-sm font-medium text-muted-foreground mb-2">
-                Due Date
-              </label>
-              <input
-                type="date"
-                id="dueDate"
-                {...register('dueDate')}
-                className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-              {errors.dueDate && (
-                <p className="mt-1 text-sm text-destructive">{errors.dueDate.message}</p>
-              )}
-            </div>
+              <div>
+                <label htmlFor="dueDate" className="block text-sm font-medium text-muted-foreground mb-2">
+                  Due Date
+                </label>
+                <input
+                  type="date"
+                  id="dueDate"
+                  {...register('dueDate')}
+                  className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+                {errors.dueDate && (
+                  <p className="mt-1 text-sm text-destructive">{errors.dueDate.message}</p>
+                )}
+              </div>
 
-            <div>
-              <label htmlFor="priority" className="block text-sm font-medium text-muted-foreground mb-2">
-                Priority
-              </label>
-              <select
-                id="priority"
-                {...register('priority')}
-                className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-              >
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-              </select>
-              {errors.priority && (
-                <p className="mt-1 text-sm text-destructive">{errors.priority.message}</p>
-              )}
-            </div>
+              <div>
+                <label htmlFor="priority" className="block text-sm font-medium text-muted-foreground mb-2">
+                  Priority
+                </label>
+                <select
+                  id="priority"
+                  {...register('priority')}
+                  className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+                {errors.priority && (
+                  <p className="mt-1 text-sm text-destructive">{errors.priority.message}</p>
+                )}
+              </div>
 
-            <div className="flex justify-between items-center pt-4">
-              <button
-                type="button"
-                onClick={handleDelete}
-                disabled={deleting}
-                className="bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white px-6 py-2 rounded-md font-medium flex items-center gap-2"
-              >
-                <Trash2 className="h-4 w-4" />
-                {deleting ? 'Deleting...' : 'Delete Task'}
-              </button>
+              <div className="flex justify-between items-center pt-4">
+                <button
+                  type="button"
+                  onClick={handleDelete}
+                  disabled={deleting}
+                  className="bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white px-6 py-2 rounded-md font-medium flex items-center gap-2"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  {deleting ? 'Deleting...' : 'Delete Task'}
+                </button>
 
-              <button
-                type="submit"
-                disabled={saving}
-                className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-6 py-2 rounded-md font-medium flex items-center gap-2"
-              >
-                <Save className="h-4 w-4" />
-                {saving ? 'Saving...' : 'Save Changes'}
-              </button>
-            </div>
-          </form>
+                <button
+                  type="submit"
+                  disabled={saving}
+                  className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-6 py-2 rounded-md font-medium flex items-center gap-2"
+                >
+                  <Save className="h-4 w-4" />
+                  {saving ? 'Saving...' : 'Save Changes'}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </main>
     </div>

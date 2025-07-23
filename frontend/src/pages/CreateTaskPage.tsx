@@ -69,7 +69,6 @@ const CreateTaskPage = () => {
                 {error}
               </div>
             )}
-
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="title" className="block text-sm font-medium text-muted-foreground mb-2">
@@ -86,7 +85,6 @@ const CreateTaskPage = () => {
                   required
                 />
               </div>
-
               <div>
                 <label htmlFor="description" className="block text-sm font-medium text-muted-foreground mb-2">
                   Description
@@ -101,7 +99,6 @@ const CreateTaskPage = () => {
                   placeholder="Enter task description"
                 />
               </div>
-
               <div>
                 <label htmlFor="priority" className="block text-sm font-medium text-muted-foreground mb-2">
                   Priority
@@ -118,7 +115,6 @@ const CreateTaskPage = () => {
                   <option value="high">High</option>
                 </select>
               </div>
-
               <div>
                 <label htmlFor="dueDate" className="block text-sm font-medium text-muted-foreground mb-2">
                   Due Date
@@ -132,7 +128,6 @@ const CreateTaskPage = () => {
                   className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
                 />
               </div>
-
               <div className="flex justify-end space-x-3">
                 <button
                   type="button"
@@ -159,3 +154,4 @@ const CreateTaskPage = () => {
 };
 
 export default CreateTaskPage;
+
