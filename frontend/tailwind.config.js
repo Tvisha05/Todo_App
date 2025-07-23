@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-<<<<<<< HEAD
-=======
   darkMode: 'class',
->>>>>>> updated-roggle
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -53,8 +50,4 @@ export default {
     },
   },
   plugins: [],
-<<<<<<< HEAD
-} 
-=======
 };
->>>>>>> updated-roggle
