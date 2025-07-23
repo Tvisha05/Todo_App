@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { tasksAPI } from '../utils/api';
 import { ArrowLeft, Plus } from 'lucide-react';
 import toast from 'react-hot-toast';
+import ThemeToggle from '../components/ThemeToggle'; // SAME TOGGLE COMPONENT 
 
 const CreateTaskPage = () => {
   const [formData, setFormData] = useState({
@@ -55,7 +56,10 @@ const CreateTaskPage = () => {
                 Back to Dashboard
               </Link>
             </div>
-            <h1 className="text-3xl font-bold text-foreground">Create New Task</h1>
+            <div className="flex items-center gap-4">
+              <h1 className="text-3xl font-bold text-foreground">Create New Task</h1>
+              <ThemeToggle /> {/* ADDED HERE */}
+            </div>
           </div>
         </div>
       </header>
@@ -154,4 +158,3 @@ const CreateTaskPage = () => {
 };
 
 export default CreateTaskPage;
-
