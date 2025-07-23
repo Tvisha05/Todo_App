@@ -7,6 +7,7 @@ import { userAPI } from '../utils/api';
 import { ArrowLeft, User, Mail, Save, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import ThemeToggle from '../components/ThemeToggle';
 
 const profileSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').max(50, 'Name cannot exceed 50 characters'),
@@ -76,24 +77,23 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div className="flex items-center gap-4">
-              <Link
-                to="/dashboard"
-                className="text-gray-600 hover:text-gray-900 flex items-center gap-2"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Back to Dashboard
-              </Link>
-            </div>
-            <h1 className="text-3xl font-bold text-gray-900">Profile Settings</h1>
-          </div>
-        </div>
-      </header>
+      <header className="bg-white dark:bg-gray-900 shadow border-b border-gray-200 dark:border-gray-700">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
+    <Link
+      to="/dashboard"
+      className="text-muted-foreground dark:text-muted-foreground-dark hover:text-foreground dark:hover:text-white flex items-center gap-2"
+    >
+      <ArrowLeft className="h-4 w-4" />
+      Back to Dashboard
+    </Link>
+    <div className="flex items-center gap-4">
+      <h1 className="text-2xl font-bold text-foreground dark:text-white">Profile Settings</h1>
+      <ThemeToggle />
+    </div>
+  </div>
+</header>
 
       <main className="max-w-2xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <div className="bg-background shadow rounded-lg border border-border">
@@ -105,13 +105,14 @@ const ProfilePage = () => {
                   <User className="h-4 w-4 inline mr-2" />
                   Full Name
                 </label>
-                <input
-                  type="text"
-                  id="name"
-                  {...register('name')}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Enter your full name"
+                <input 
+                type="text"
+                id="name"
+                {...register('name')}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Enter your full name"
                 />
+
                 {errors.name && (
                   <p className="mt-1 text-sm text-destructive">{errors.name.message}</p>
                 )}
@@ -122,13 +123,14 @@ const ProfilePage = () => {
                   <Mail className="h-4 w-4 inline mr-2" />
                   Email Address
                 </label>
-                <input
-                  type="email"
-                  id="email"
-                  {...register('email')}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Enter your email address"
+                <input 
+                type="email"
+                id="email"
+                {...register('email')}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Enter your email address"
                 />
+
                 {errors.email && (
                   <p className="mt-1 text-sm text-destructive">{errors.email.message}</p>
                 )}
