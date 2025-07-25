@@ -23,7 +23,12 @@ const taskSchema = new mongoose.Schema({
         type: Date,
         validate: {
             validator: function(value) {
-                return !value || value >= new Date();
+                if (!value) return true;
+                const now = new Date();
+                // Zero out the time for both dates
+                const due = new Date(value.getFullYear(), value.getMonth(), value.getDate());
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                return due >= today;
             },
             message: 'Due date cannot be in the past'
         }
